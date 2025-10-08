@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍺 Máy Chọn Lý Do Tổ Chức Tiệc Bia | High47 Beer Service</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(-45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57, #ff9ff3);
+            background-size: 400% 400%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            animation: gradientShift 15s ease infinite;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="beer" patternUnits="userSpaceOnUse" width="20" height="20"><text x="10" y="15" text-anchor="middle" font-size="12" opacity="0.1">🍺</text></pattern></defs><rect width="100" height="100" fill="url(%23beer)"/></svg>');
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .header {
+            margin-bottom: 30px;
+        }
+
+        .title {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+        }
+
+        .beer-emoji {
+            font-size: 3rem;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        .picker-section {
+            margin: 40px 0;
+        }
+
+        .pick-button {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.3rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(238, 90, 36, 0.3);
+            font-weight: bold;
+        }
+
+        .pick-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(238, 90, 36, 0.4);
+            background: linear-gradient(45deg, #ee5a24, #ff6b6b);
+        }
+
+        .pick-button:active {
+            transform: translateY(0);
+        }
+
+        .result-section {
+            margin-top: 30px;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .reason-card {
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.3);
+            transform: scale(0);
+            transition: all 0.5s ease;
+        }
+
+        .reason-card.show {
+            transform: scale(1);
+        }
+
+        .reason-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #ffd700;
+        }
+
+        .reason-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .reason-description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            font-style: italic;
+            opacity: 0.9;
+        }
+
+        /* High47 Service Section */
+        .high47-section {
+            margin-top: 40px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ffa726 100%);
+            padding: 30px;
+            border-radius: 20px;
+            color: white;
+            box-shadow: 0 15px 30px rgba(255, 107, 107, 0.3);
+            transform: scale(0);
+            transition: all 0.5s ease 0.3s;
+        }
+
+        .high47-section.show {
+            transform: scale(1);
+        }
+
+        .high47-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .lightning-icon {
+            font-size: 2.5rem;
+            color: #ffd700;
+            margin-right: 10px;
+            animation: flash 2s infinite;
+        }
+
+        @keyframes flash {
+            0%, 50%, 100% { opacity: 1; }
+            25%, 75% { opacity: 0.5; }
+        }
+
+        .high47-title {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .high47-subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        .service-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .feature-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .feature-description {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .cta-button {
+            background: linear-gradient(45deg, #ffd700, #ff8f00);
+            color: #2c3e50;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 10px 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(255, 215, 0, 0.4);
+            background: linear-gradient(45deg, #ff8f00, #ffd700);
+        }
+
+        .poster-showcase {
+            margin: 30px 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .poster-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Gallery Section */
+        .gallery-section {
+            margin: 30px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .gallery-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: white;
+            text-align: center;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            color: white;
+            padding: 10px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(52, 152, 219, 0.1);
+            border-radius: 10px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #3498db;
+        }
+
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        .footer {
+            margin-top: 30px;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .title {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .pick-button {
+                padding: 12px 25px;
+                font-size: 1.1rem;
+            }
+            
+            .reason-title {
+                font-size: 1.5rem;
+            }
+            
+            .high47-title {
+                font-size: 1.5rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .stats {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .service-features {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .loading {
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .celebration {
+            animation: celebrate 1s ease-in-out;
+        }
+
+        @keyframes celebrate {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="beer-emoji">🍺</div>
+            <h1 class="title">Máy Chọn Lý Do Tổ Chức Tiệc Bia</h1>
+            <p class="subtitle">101 lý do tuyệt vời để mở tiệc ngay hôm nay!</p>
+        </div>
+
+        <div class="picker-section">
+            <button class="pick-button" onclick="pickRandomReason()">
+                🎲 Chọn Lý Do Ngẫu Nhiên
+            </button>
+        </div>
+
+        <div class="result-section" id="resultSection">
+            <p style="color: #7f8c8d; font-style: italic;">
+                Nhấn nút để khám phá lý do tuyệt vời cho tiệc bia tiếp theo! 🎉
+            </p>
+        </div>
+
+        <!-- High47 Service Section -->
+        <div class="high47-section" id="high47Section">
+            <div class="high47-logo">
+                <span class="lightning-icon">⚡</span>
+                <span style="font-size: 2rem; font-weight: bold;">HIGH47</span>
+            </div>
+            
+            <h2 class="high47-title">TRẠM SẠC BIA DI ĐỘNG</h2>
+            <p class="high47-subtitle">Tiện phong bia craft, setup tại nhà!</p>
+            
+            <div class="service-features">
+                <div class="feature-card">
+                    <div class="feature-icon">🚚</div>
+                    <div class="feature-title">Dịch vụ tận nơi</div>
+                    <div class="feature-description">Setup trạm bia chuyên nghiệp tại nhà hoặc sự kiện của bạn</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🍺</div>
+                    <div class="feature-title">Bia craft cao cấp</div>
+                    <div class="feature-description">Đa dạng loại bia craft tươi ngon, chất lượng hàng đầu</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎉</div>
+                    <div class="feature-title">Tiệc hoàn hảo</div>
+                    <div class="feature-description">Tạo không khí tiệc tuyệt vời với dịch vụ chuyên nghiệp</div>
+                </div>
+            </div>
+
+            <div class="gallery-section">
+                <h3 class="gallery-title">🎪 Trải Nghiệm High47 qua Hình Ảnh</h3>
+                <div class="gallery-grid">
+                    <div class="gallery-item" onclick="showGalleryImage(1)">
+                        <img src="high47-poster.jpg" style="object-position: top left;">
+                        <div class="gallery-overlay">Logo & Branding</div>
+                    </div>
+                    <div class="gallery-item" onclick="showGalleryImage(2)">
+                        <img src="high47-poster.jpg" style="object-position: center left;">
+                        <div class="gallery-overlay">Sản Phẩm Chủ Tiệc</div>
+                    </div>
+                    <div class="gallery-item" onclick="showGalleryImage(3)">
+                        <img src="high47-poster.jpg" style="object-position: center right;">
+                        <div class="gallery-overlay">Thông Tin Liên Hệ</div>
+                    </div>
+                    <div class="gallery-item" onclick="showGalleryImage(4)">
+                        <img src="high47-poster.jpg" style="object-position: bottom left;">
+                        <div class="gallery-overlay">Không Gian Tiệc</div>
+                    </div>
+                    <div class="gallery-item" onclick="showGalleryImage(5)">
+                        <img src="high47-poster.jpg" style="object-position: bottom center;">
+                        <div class="gallery-overlay">Trải Nghiệm Khách Hàng</div>
+                    </div>
+                    <div class="gallery-item" onclick="showGalleryImage(6)">
+                        <img src="high47-poster.jpg" style="object-position: bottom right;">
+                        <div class="gallery-overlay">Bầu Không Khí Vui Vẻ</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="poster-showcase">
+                <img src="high47-poster.jpg" alt="High47 Mobile Beer Station" class="poster-image">
+            </div>
+
+            <div class="cta-buttons">
+                <a href="tel:0969471247" class="cta-button">
+                    📞 Gọi ngay: 0969471247
+                </a>
+                <a href="mailto:connect@eagodi.com" class="cta-button">
+                    ✉️ Email: connect@eagodi.com
+                </a>
+            </div>
+
+            <div style="margin-top: 20px; font-size: 0.9rem; opacity: 0.8;">
+                🎯 <strong>Bước tiếp theo:</strong> Liên hệ High47 để biến lý do thành tiệc thực sự!
+            </div>
+        </div>
+
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number">101</div>
+                <div class="stat-label">Lý Do Hay</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="pickedCount">0</div>
+                <div class="stat-label">Lần Đã Chọn</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">∞</div>
+                <div class="stat-label">Niềm Vui</div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>🎊 Uống có trách nhiệm - Vui vẻ có kế hoạch với High47! 🎊</p>
+        </div>
+    </div>
+
+    <script>
+        const reasons = [
+            { id: 1, title: "Sinh nhật", description: "Dịp duy nhất trong năm bạn được tự chúc mừng mình… bằng bia và bánh kem." },
+            { id: 2, title: "Kỷ niệm ngày cưới", description: "Còn nhớ được ngày này đã là lý do đủ lớn để ăn mừng rồi." },
+            { id: 3, title: "Ngày tỏ tình", description: "Dù thành công hay thất bại – đều xứng đáng một chầu." },
+            { id: 4, title: "Ngày thất tình", description: "Khi tình đi xa, chỉ còn bia ở lại." },
+            { id: 5, title: "Ngày nhận lương", description: "Vì niềm vui này không kéo dài đến giữa tháng." },
+            { id: 6, title: "Ngày mất ví", description: "Không còn gì để mất – chỉ còn bia để gỡ mood." },
+            { id: 7, title: "Ngày đi du lịch về", description: "Về nhà, kể chuyện hành trình bằng… men." },
+            { id: 8, title: "Ngày hết deadline", description: "Làm xong việc là phải \"đổ pin\"." },
+            { id: 9, title: "Ngày bắt đầu diet", description: "Tiệc chia tay đồ ăn ngon." },
+            { id: 10, title: "Ngày bỏ diet", description: "Vì sống khỏe là phải vui vẻ trước." },
+            { id: 11, title: "Ngày chia tay người yêu cũ", description: "Một khởi đầu mới – trong hơi men cũ." },
+            { id: 12, title: "Ngày nhận việc mới", description: "Tự thưởng vì đã không thất nghiệp." },
+            { id: 13, title: "Ngày bị sếp la", description: "Uống để \"reset cảm xúc\"." },
+            { id: 14, title: "Ngày trời mưa", description: "Mưa ngoài hiên, bia trong tim." },
+            { id: 15, title: "Ngày nắng đẹp", description: "Trời đẹp thì lòng cũng phải chill." },
+            { id: 16, title: "Ngày đầu tháng", description: "Đặt mục tiêu mới: \"Uống có kiểm soát\" (thất bại ngay tối nay)." },
+            { id: 17, title: "Ngày cuối tháng", description: "Vẫn còn sống sót – lý do đủ lớn." },
+            { id: 18, title: "Ngày tự thưởng bản thân", description: "Bản thân giỏi quá, đáng được say." },
+            { id: 19, title: "Ngày ra mắt người yêu", description: "Một ly cho bớt run." },
+            { id: 20, title: "Ngày được người yêu cũ nhắn tin", description: "Không trả lời, chỉ nâng ly." },
+            { id: 21, title: "Ngày team thắng thầu", description: "Cúp vàng của dân văn phòng." },
+            { id: 22, title: "Ngày team bị out project", description: "\"Thôi kệ, mai lại có job khác.\"" },
+            { id: 23, title: "Ngày họp lớp", description: "Vì ai cũng muốn nhớ lại… theo cách quên hết." },
+            { id: 24, title: "Ngày quên sinh nhật bạn", description: "Dỗ bạn bằng bia, chắc chắn tha." },
+            { id: 25, title: "Ngày được bonus", description: "Uống sang hơn bình thường." },
+            { id: 26, title: "Ngày bị trừ KPI", description: "Giảm KPI, tăng nồng độ cồn." },
+            { id: 27, title: "Ngày bạn thân cưới", description: "Tiệc cưới người ta, nhưng say là việc của mình." },
+            { id: 28, title: "Ngày bạn thân chia tay", description: "Đến an ủi mà lại say luôn." },
+            { id: 29, title: "Ngày học xong khóa online", description: "Đã \"tốt nghiệp Netflix University\"." },
+            { id: 30, title: "Ngày đổi điện thoại mới", description: "Story đẹp hơn thì party vui hơn." },
+            { id: 31, title: "Ngày quên sạc điện thoại", description: "Không gọi được ai – tự gọi bia." },
+            { id: 32, title: "Ngày con đi học lại", description: "Vì nhà yên tĩnh, bố mẹ rảnh." },
+            { id: 33, title: "Ngày dọn nhà", description: "\"Làm một lon cho khỏe người.\"" },
+            { id: 34, title: "Ngày trả nợ xong", description: "Cảm giác nhẹ như men bia đầu tiên." },
+            { id: 35, title: "Ngày trúng số", description: "Uống mừng, kẻo tỉnh ra là mơ." },
+            { id: 36, title: "Ngày hết cô đơn", description: "Có người yêu mới – khui ngay." },
+            { id: 37, title: "Ngày được khen", description: "Cơ hội hiếm, phải tận dụng." },
+            { id: 38, title: "Ngày trời lạnh", description: "Uống cho ấm lòng." },
+            { id: 39, title: "Ngày xem phim hay", description: "Uống cùng cảm xúc." },
+            { id: 40, title: "Ngày thắng cá độ", description: "Thắng nhỏ, uống lớn." },
+            { id: 41, title: "Ngày lên chức", description: "Áp lực nhiều hơn, bia cũng nhiều hơn." },
+            { id: 42, title: "Ngày nhà mới", description: "Tẩy trần bằng bia craft." },
+            { id: 43, title: "Ngày sinh nhật con", description: "Con vui, bố mẹ say." },
+            { id: 44, title: "Ngày công tác về", description: "Xa bia lâu rồi, giờ bù." },
+            { id: 45, title: "Ngày tái ngộ", description: "\"Không nhớ chuyện xưa, chỉ nhớ ly này.\"" },
+            { id: 46, title: "Ngày thành hôn", description: "Cam kết trọn đời – với nhau và với bia." },
+            { id: 47, title: "Ngày trúng thưởng", description: "Có thưởng, phải thưởng mình." },
+            { id: 48, title: "Ngày đỗ đại học", description: "Chính thức có cớ để say hợp pháp." },
+            { id: 49, title: "Ngày trúng quà", description: "Niềm vui dù nhỏ cũng đáng cạn ly." },
+            { id: 50, title: "Ngày mua ô tô", description: "Mừng xe, cấm lái, vẫn uống." },
+            { id: 51, title: "Ngày gội đầu", description: "Sạch đầu, nặng bụng." },
+            { id: 52, title: "Ngày bích ghế", description: "Khi bạn và quán hòa làm một." },
+            { id: 53, title: "Ngày cắm trại", description: "Bia ngon hơn khi ngồi ngoài trời." },
+            { id: 54, title: "Ngày Valentine", description: "Yêu hay không yêu, cũng phải uống." },
+            { id: 55, title: "Ngày 8/3", description: "Chị em say quyền lực, anh em say thật." },
+            { id: 56, title: "Ngày 20/10", description: "Bia chảy thay lời yêu." },
+            { id: 57, title: "Ngày Giáng Sinh", description: "Noel không có tuyết, nhưng có bọt bia." },
+            { id: 58, title: "Ngày Tết Dương Lịch", description: "Mở đầu năm mới bằng tiếng \"khui\"." },
+            { id: 59, title: "Ngày Tết Âm Lịch", description: "Mừng Tết, mừng tuổi, mừng men." },
+            { id: 60, title: "Ngày Lễ Tình Nhân Độc Thân", description: "Uống cho đỡ cô đơn." },
+            { id: 61, title: "Ngày Trung Thu", description: "Trẻ ăn bánh, người lớn uống bia." },
+            { id: 62, title: "Ngày Halloween", description: "Hóa trang thành người tỉnh." },
+            { id: 63, title: "Ngày Black Friday", description: "Uống cho đỡ mua sắm quá tay." },
+            { id: 64, title: "Ngày Quốc tế Lao động", description: "Nghỉ làm, làm bia." },
+            { id: 65, title: "Ngày Quốc khánh", description: "Một ngày không bia là thiếu quốc hồn." },
+            { id: 66, title: "Ngày Nhà giáo Việt Nam", description: "Uống mừng \"người lái đò say mê\"." },
+            { id: 67, title: "Ngày Thất tịch", description: "Không mưa ngâu thì mưa bia." },
+            { id: 68, title: "Ngày Cá tháng Tư", description: "Nói thật: \"Tôi chỉ uống 1 ly\"." },
+            { id: 69, title: "Ngày hết dịch", description: "Mừng được gặp người thật." },
+            { id: 70, title: "Ngày khai trương", description: "Mở cửa là phải mở nắp." },
+            { id: 71, title: "Ngày đóng deal", description: "Vì hợp đồng không ký bằng tay run." },
+            { id: 72, title: "Ngày hết hợp đồng", description: "Mừng vì tự do… tạm thời." },
+            { id: 73, title: "Ngày xem bóng đá", description: "Việt Nam thắng là lý do quốc dân." },
+            { id: 74, title: "Ngày bạn mới ra đời", description: "Một \"new friend\" – một ly mới." },
+            { id: 75, title: "Ngày họp team", description: "Họp xong thấy khát." },
+            { id: 76, title: "Ngày được tag trong ảnh đẹp", description: "Phải kỷ niệm khoảnh khắc \"ít ảo\" này." },
+            { id: 77, title: "Ngày ra mắt sản phẩm", description: "Brand mới, bia mới." },
+            { id: 78, title: "Ngày được lên báo", description: "Dù là tin gì cũng đáng khui." },
+            { id: 79, title: "Ngày bị từ chối job", description: "\"Không sao, bia luôn tuyển dụng.\"" },
+            { id: 80, title: "Ngày được nhận job", description: "\"Ký hợp đồng bằng bọt bia.\"" },
+            { id: 81, title: "Ngày chuyển nhà", description: "Đổi chỗ, đổi quán." },
+            { id: 82, title: "Ngày sắm bàn mới", description: "Cần test độ chắc bằng ly bia." },
+            { id: 83, title: "Ngày trời đẹp bất ngờ", description: "Nắng vàng, men vàng." },
+            { id: 84, title: "Ngày mưa to", description: "Không đi đâu được – uống thôi." },
+            { id: 85, title: "Ngày bị kẹt xe", description: "Đợi chi, ghé quán." },
+            { id: 86, title: "Ngày quên deadline", description: "Còn gì cứu vãn ngoài bia." },
+            { id: 87, title: "Ngày nhớ người cũ", description: "Ly này gửi về kỷ niệm." },
+            { id: 88, title: "Ngày có tin vui", description: "Không nói rõ, nhưng phải uống." },
+            { id: 89, title: "Ngày bị hủy kèo", description: "\"Hủy kèo nhưng không hủy tiệc.\"" },
+            { id: 90, title: "Ngày được kèo bất ngờ", description: "Không chuẩn bị vẫn phải vui." },
+            { id: 91, title: "Ngày họp phụ huynh", description: "Kết quả thế nào cũng phải uống." },
+            { id: 92, title: "Ngày đi khám sức khỏe", description: "Bác sĩ bảo \"uống ít lại\" – nên phải uống thêm lần cuối." },
+            { id: 93, title: "Ngày không có lý do", description: "Đó mới là lý do thật sự." },
+            { id: 94, title: "Ngày \"cần tâm sự\"", description: "Bia là nhà tâm lý học không bao giờ ngắt lời." },
+            { id: 95, title: "Ngày đẹp trời", description: "Cơ thể tự gọi bia." },
+            { id: 96, title: "Ngày sinh nhật sếp", description: "Cơ hội uống mà không ai dám cấm." },
+            { id: 97, title: "Ngày họp hành marathon", description: "Kết thúc bằng marathon bia." },
+            { id: 98, title: "Ngày được người yêu nấu ăn", description: "Cần bia để \"đỡ mặn\"." },
+            { id: 99, title: "Ngày hết pin laptop", description: "Không làm được việc – làm bia." },
+            { id: 100, title: "Ngày trễ lương", description: "Càng chờ càng khát." },
+            { id: 101, title: "Ngày đầu tuần", description: "Khởi động nhẹ bằng… 3 ly." }
+        ];
+
+        let pickedCount = 0;
+        let lastPickedId = null;
+
+        function pickRandomReason() {
+            const button = document.querySelector('.pick-button');
+            const resultSection = document.getElementById('resultSection');
+            const high47Section = document.getElementById('high47Section');
+            
+            // Add loading state
+            button.classList.add('loading');
+            button.textContent = '🎲 Đang chọn...';
+            button.disabled = true;
+            
+            // Clear previous result
+            resultSection.innerHTML = '<p class="loading" style="color: #7f8c8d; font-style: italic;">Đang tìm lý do tuyệt vời...</p>';
+            
+            // Hide High47 section temporarily
+            high47Section.classList.remove('show');
+            
+            setTimeout(() => {
+                // Pick random reason (avoid same as last pick if possible)
+                let randomIndex;
+                let attempts = 0;
+                do {
+                    randomIndex = Math.floor(Math.random() * reasons.length);
+                    attempts++;
+                } while (reasons[randomIndex].id === lastPickedId && attempts < 10 && reasons.length > 1);
+                
+                const selectedReason = reasons[randomIndex];
+                lastPickedId = selectedReason.id;
+                
+                // Update counter
+                pickedCount++;
+                document.getElementById('pickedCount').textContent = pickedCount;
+                
+                // Display result
+                resultSection.innerHTML = `
+                    <div class="reason-card">
+                        <div class="reason-number">#${selectedReason.id}</div>
+                        <div class="reason-title">${selectedReason.title}</div>
+                        <div class="reason-description">${selectedReason.description}</div>
+                    </div>
+                `;
+                
+                // Animate the card
+                setTimeout(() => {
+                    document.querySelector('.reason-card').classList.add('show');
+                    // Show High47 section after reason card appears
+                    setTimeout(() => {
+                        high47Section.classList.add('show');
+                        // Add celebration effect
+                        document.querySelector('.container').classList.add('celebration');
+                        setTimeout(() => {
+                            document.querySelector('.container').classList.remove('celebration');
+                        }, 1000);
+                    }, 500);
+                }, 100);
+                
+                // Reset button
+                button.classList.remove('loading');
+                button.textContent = '🎲 Chọn Lý Do Khác';
+                button.disabled = false;
+            }, 1500);
+        }
+
+        // Add some fun interactions
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add click sound effect simulation
+            const button = document.querySelector('.pick-button');
+            button.addEventListener('click', function() {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+            });
+            
+            // Add keyboard support
+            document.addEventListener('keydown', function(e) {
+                if (e.code === 'Space' && !button.disabled) {
+                    e.preventDefault();
+                    pickRandomReason();
+                }
+            });
+
+            // Add click tracking for call-to-action buttons
+            document.querySelectorAll('.cta-button').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    // Add click effect
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                });
+            });
+        });
+
+        // Gallery functionality
+        function showGalleryImage(imageId) {
+            const messages = {
+                1: "⚡ HIGH47 - TRẠM SẠC BIA DI ĐỘNG! Logo mạnh mẽ với ký hiệu tia chớp đặc trưng!",
+                2: "🍺 Sản phẩm chủ tiệc với thiết kế bao bì ấn tượng, phong cách trẻ trung!",
+                3: "📞 Liên hệ ngay: 0969471247 hoặc connect@eagodi.com để đặt lịch!",
+                4: "🏪 Không gian tiệc đa dạng - từ nhà riêng đến sự kiện lớn!",
+                5: "👥 Khách hàng hài lòng với trải nghiệm bia craft chất lượng cao!",
+                6: "🎉 Bầu không khí vui vẻ, sôi động trong mọi buổi tiệc High47!"
+            };
+            
+            // Add celebration effect for gallery clicks
+            document.querySelector('.gallery-section').classList.add('celebration');
+            setTimeout(() => {
+                document.querySelector('.gallery-section').classList.remove('celebration');
+            }, 1000);
+            
+            // Show message with more details
+            alert(messages[imageId] || "Khám phá thêm về dịch vụ High47!");
+        }
+    </script>
+</body>
+</html>

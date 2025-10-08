@@ -1,0 +1,13 @@
+{
+  "name": "high47-beer-party-picker",
+  "version": "1.0.0",
+  "description": "Interactive beer party reason picker featuring High47 mobile beer service",
+  "main": "index.html",
+  "scripts": {
+    "start": "python3 -m http.server 8000",
+    "dev": "python3 -m http.server 3000"
+  },
+  "keywords": ["beer", "party", "high47", "vietnamese", "interactive"],
+  "author": "MiniMax Agent",
+  "license": "MIT"
+}
